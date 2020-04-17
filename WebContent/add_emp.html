@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="main.css">
+<script type="text/javascript" src="admin.js"></script>
+<style>
+	#addemp {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	#single,#csv {
+		margin-top: 50px;
+		display: none;
+	}
+</style>
+<script>
+	function show_single() {
+		var csv = document.getElementById("csv");
+		csv.style.display = "none";
+		var single = document.getElementById("single");
+		single.style.display = "inline-block";
+	}
+	
+	function show_csv() {
+		var single = document.getElementById("single");
+		single.style.display = "none";
+		var csv = document.getElementById("csv");
+		csv.style.display = "inline-block";
+	}
+	
+	function validate() {
+		if(document.getElementById("one").checked) {
+			var emp_id = document.getElementById("emp_id").value;
+			var emp_name = document.getElementById("emp_name").value;
+			var gross_sal = document.getElementById("gross_sal").value;
+			var message = "";
+			if(emp_id.length == 0 || emp_name.length == 0 || gross_sal == "") {
+				alert("All fields are mandatory!");
+				return false;
+			}
+			return true;
+		}
+		else {
+			var fileName = document.getElementById("ip_file").value;
+			var fileExtension = fileName.split('.').pop();
+			if(fileExtension == 'csv') {
+				return true;
+			}
+			alert("Invalid File Type!");
+			return false;
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="heading">
+		
+		<h1>Income Tax System</h1>
+		
+		<div class="topnav">
+			<a onclick="gotoHome();">Home</a>
+  			<a onclick="gotoLimits();">Exemption Limits</a>
+  			<a onclick="gotoSlabs();">Tax Slabs</a>
+  			<a onclick="gotoSalary();">Update Salary</a>
+  			<a onclick="gotoAddField();">Add Field</a>
+  			<a onclick="gotoRemoveField();">Remove Field</a>
+  			<a onclick="gotoAddEmployee();">Add Employee</a>
+  			<a onclick="gotoRemoveEmployee();">Remove Employee</a>
+  			<a onclick="gotoReset();">Reset</a>
+  			<a onclick="logOut();" style="float:right;">Logout</a>
+		</div>
+				
+	</div>
+	
+	<div class="contents">
+		<h3>Add New Employee</h3>
+	
+		<form action="AddEmployee" method="POST" enctype="multipart/form-data" onsubmit="return validate();" autocomplete="off">
+			<table id="addemp">
+				<tr>
+					<td><input type="radio" id="one" name="no_emp" value="one" onclick="show_single();"></td>
+					<td>Single Employee</td>
+					<td><input type="radio" id="many" name="no_emp" value="many" onclick="show_csv();"></td>
+					<td>CSV File</td>
+				</tr>
+			</table>
+		
+			<table id="single">
+				<tr>
+					<td>Employee Id</td>
+					<td><input id="emp_id" name="emp_id" type="text"></td>
+				</tr>
+				<tr>
+					<td>Employee Name</td>
+					<td><input id="emp_name" name="emp_name" type="text"></td>
+				</tr>
+				<tr>
+					<td>Employee Gross Salary</td>
+					<td><input id="gross_sal" name="gross_sal" type="number"></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center; padding: 50px"><input type="submit" value="Submit"></td>
+				</tr>
+			</table>
+			
+			<table id="csv">
+				<tr>
+					<td>CSV Format</td>
+					<td><img src="images/sample_emp.png"></td>
+				</tr>
+				<tr>
+					<td>Upload CSV File</td>
+					<td><input id="ip_file" name="csv" type="file"></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center; padding: 50px"><input type="submit" value="Submit"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
